@@ -28,4 +28,7 @@ export class UserEntity implements User {
 
   @ApiProperty({ required: false, nullable: true })
   addressId: number | null;
+
+  @ApiProperty({ required: false, nullable: true })
+  profileImageUrl: string | null;
 }

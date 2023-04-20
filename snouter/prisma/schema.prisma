@@ -23,18 +23,18 @@ enum State {
 
 // User table
 model User {
-  id           Int           @id @default(autoincrement())
-  firstName    String?
-  lastName     String?
-  username     String        @unique
-  email        String        @unique
-  hash         String
-  role         Role          @default(USER)
-  phoneNumber  String?
-  Address      Address?      @relation(fields: [addressId], references: [id])
-  addressId    Int?
-  products     Product[]
-  profileImage ProfileImage?
+  id              Int       @id @default(autoincrement())
+  firstName       String?
+  lastName        String?
+  username        String    @unique
+  email           String    @unique
+  hash            String
+  role            Role      @default(USER)
+  phoneNumber     String?
+  Address         Address?  @relation(fields: [addressId], references: [id])
+  addressId       Int?
+  products        Product[]
+  profileImageUrl String?
 }
 
 // Address table
@@ -143,12 +143,4 @@ model ProductImage {
   url       String
   product   Product @relation(fields: [productId], references: [id])
   productId Int
-}
-
-// ProfileImage table
-model ProfileImage {
-  guid   String @id @default(uuid())
-  url    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
 }
