@@ -83,20 +83,20 @@ model Product {
 
 // Category table
 model Category {
-  id                    Int                     @id @default(autoincrement())
-  name                  String
-  subcategories         Subcategory[]
-  CategorySpecification CategorySpecification[]
+  id            Int                     @id @default(autoincrement())
+  name          String
+  subcategories Subcategory[]
+  categorySpecs CategorySpecification[]
 }
 
 // Subcategory table
 model Subcategory {
-  id                       Int                        @id @default(autoincrement())
-  name                     String
-  products                 Product[]
-  category                 Category                   @relation(fields: [categoryId], references: [id])
-  categoryId               Int
-  SubcategorySpecification SubcategorySpecification[]
+  id               Int                        @id @default(autoincrement())
+  name             String
+  products         Product[]
+  category         Category                   @relation(fields: [categoryId], references: [id])
+  categoryId       Int
+  subcategorySpecs SubcategorySpecification[]
 }
 
 // CategorySpecification table
