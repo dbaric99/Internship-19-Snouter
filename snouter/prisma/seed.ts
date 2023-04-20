@@ -7,7 +7,35 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // create two dummy articles
+  const counties = [
+    { name: 'Bjelovarsko-bilogorska' },
+    { name: 'Brodsko-posavska' },
+    { name: 'Dubrovačko-neretvanska' },
+    { name: 'Istarska' },
+    { name: 'Karlovačka' },
+    { name: 'Koprivničko-križevačka' },
+    { name: 'Krapinsko-zagorska' },
+    { name: 'Ličko-senjska' },
+    { name: 'Međimurska' },
+    { name: 'Osječko-baranjska' },
+    { name: 'Požeško-slavonska' },
+    { name: 'Primorsko-goranska' },
+    { name: 'Sisačko-moslavačka' },
+    { name: 'Splitsko-dalmatinska' },
+    { name: 'Šibensko-kninska' },
+    { name: 'Varaždinska' },
+    { name: 'Virovitičko-podravska' },
+    { name: 'Vukovarsko-srijemska' },
+    { name: 'Zadarska' },
+    { name: 'Zagrebačka' },
+    { name: 'Grad Zagreb' },
+  ];
+
+  counties.forEach(async (county) => {
+    await prisma.county.create({
+      data: county,
+    });
+  });
 }
 
 // execute the main function
