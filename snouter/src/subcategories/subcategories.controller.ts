@@ -36,7 +36,6 @@ export class SubcategoriesController {
     return this.subcategoriesService.findOne(+id);
   }
 
-  //TODO: Fix this
   @Get(':id/products')
   getProducts(@Param('id') id: string) {
     return this.subcategoriesService.getProducts(+id);

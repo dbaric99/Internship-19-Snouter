@@ -20,7 +20,9 @@ export class CategoriesService {
   }
 
   getProducts(id: number) {
-    //return this.prisma.product.findMany({ where: { categoryId: id } });
+    return this.prisma.product.findMany({
+      where: { subcategory: { categoryId: id } },
+    });
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
