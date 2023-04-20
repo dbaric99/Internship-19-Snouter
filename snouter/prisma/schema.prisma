@@ -31,7 +31,7 @@ model User {
   hash            String
   role            Role      @default(USER)
   phoneNumber     String?
-  Address         Address?  @relation(fields: [addressId], references: [id])
+  address         Address?  @relation(fields: [addressId], references: [id])
   addressId       Int?
   products        Product[]
   profileImageUrl String?
@@ -52,7 +52,7 @@ model City {
   name      String
   zip       String
   addresses Address[]
-  County    County    @relation(fields: [countyId], references: [id])
+  county    County    @relation(fields: [countyId], references: [id])
   countyId  Int
 }
 
@@ -65,7 +65,6 @@ model County {
 // Product table
 model Product {
   id            Int                    @id @default(autoincrement())
-  slug          String                 @unique
   name          String
   description   String?
   price         Float
@@ -78,7 +77,7 @@ model Product {
   seller        User                   @relation(fields: [sellerId], references: [id])
   sellerId      Int
   productSpecs  ProductSpecification[]
-  images        ProductImage[]
+  images        String[]
 }
 
 // Category table
@@ -121,10 +120,10 @@ model SubcategorySpecification {
 
 // Specification table
 model Specification {
-  id                       Int                        @id @default(autoincrement())
-  CategorySpecification    CategorySpecification[]
-  SubcategorySpecification SubcategorySpecification[]
-  ProductSpecification     ProductSpecification[]
+  id               Int                        @id @default(autoincrement())
+  categorySpecs    CategorySpecification[]
+  subcategorySpecs SubcategorySpecification[]
+  productSpecs     ProductSpecification[]
 }
 
 // ProductSpecification table
@@ -135,12 +134,4 @@ model ProductSpecification {
   productId       Int
   specification   Specification @relation(fields: [specificationId], references: [id])
   specificationId Int
-}
-
-// ProductImage table
-model ProductImage {
-  guid      String  @id @default(uuid())
-  url       String
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
 }

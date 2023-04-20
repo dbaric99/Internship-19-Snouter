@@ -2,9 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { State } from '@prisma/client';
 
 export class CreateProductDto {
-  @ApiProperty()
-  slug: string;
-
   @ApiProperty({ required: true })
   name: string;
 
@@ -34,4 +31,7 @@ export class CreateProductDto {
 
   @ApiProperty()
   categoryId: number;
+
+  @ApiProperty({ required: false, nullable: true })
+  images: string[] | null;
 }

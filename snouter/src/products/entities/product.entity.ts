@@ -17,9 +17,6 @@ export class ProductEntity implements Product {
   @ApiProperty({ required: true })
   createdAt: Date;
 
-  @ApiProperty()
-  slug: string;
-
   @ApiProperty({ required: false, nullable: true })
   updatedAt: Date | null;
 
@@ -37,4 +34,7 @@ export class ProductEntity implements Product {
 
   @ApiProperty()
   categoryId: number;
+
+  @ApiProperty({ required: false, nullable: true })
+  images: string[] | null;
 }
