@@ -43,7 +43,6 @@ model Address {
 model City {
   id        Int       @id @default(autoincrement())
   name      String
-  state     String
   zip       String
   addresses Address[]
 }
