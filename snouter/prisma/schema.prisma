@@ -15,19 +15,23 @@ enum Role {
   ADMIN
 }
 
+enum State {
+  NEW
+  USED
+  DAMAGED
+}
+
 // User table
 model User {
-  id             Int           @id @default(autoincrement())
-  username       String        @unique
-  email          String        @unique
-  password       String
-  role           Role          @default(USER)
-  Address        Address       @relation(fields: [addressId], references: [id])
-  addressId      Int
-  products       Product[]
-  profileImage   ProfileImage?
-  soldProducts   Order[]       @relation("Seller")
-  boughtProducts Order[]       @relation("Buyer")
+  id           Int           @id @default(autoincrement())
+  username     String        @unique
+  email        String        @unique
+  password     String
+  role         Role          @default(USER)
+  Address      Address       @relation(fields: [addressId], references: [id])
+  addressId    Int
+  products     Product[]
+  profileImage ProfileImage?
 }
 
 // Address table
@@ -56,13 +60,14 @@ model Product {
   price         Float
   createdAt     DateTime
   updatedAt     DateTime
+  state         State
+  isSold        Boolean                @default(false)
   subcategory   Subcategory            @relation(fields: [subcategoryId], references: [id])
   subcategoryId Int
   seller        User                   @relation(fields: [sellerId], references: [id])
   sellerId      Int
   productSpecs  ProductSpecification[]
   images        ProductImage[]
-  orders        Order[]
 }
 
 // Category table
@@ -135,18 +140,4 @@ model ProfileImage {
   url    String
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
-}
-
-// Order table
-model Order {
-  id            Int     @id @default(autoincrement())
-  slug          String  @unique
-  product       Product @relation(fields: [productId], references: [id])
-  productId     Int
-  isCancelled   Boolean @default(false)
-  seller        User    @relation("Seller", fields: [sellerId], references: [id])
-  sellerId      Int
-  buyer         User    @relation("Buyer", fields: [buyerId], references: [id])
-  buyerId       Int
-  shippingPrice Float
 }
