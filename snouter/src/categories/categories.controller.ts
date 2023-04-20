@@ -52,7 +52,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  @ApiCreatedResponse({ type: CategoryEntity })
+  @ApiOkResponse({ type: CategoryEntity })
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(+id);
   }
