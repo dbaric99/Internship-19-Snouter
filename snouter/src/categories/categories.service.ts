@@ -19,6 +19,10 @@ export class CategoriesService {
     return this.prisma.category.findUnique({ where: { id } });
   }
 
+  getProducts(id: number) {
+    //return this.prisma.product.findMany({ where: { categoryId: id } });
+  }
+
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
     return this.prisma.category.update({
       where: { id },

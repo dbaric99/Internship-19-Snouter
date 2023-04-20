@@ -19,6 +19,10 @@ export class SubcategoriesService {
     return this.prisma.subcategory.findUnique({ where: { id } });
   }
 
+  getProducts(id: number) {
+    //return this.prisma.product.findMany({ where: { subcategoryId: id } });
+  }
+
   update(id: number, updateSubcategoryDto: UpdateSubcategoryDto) {
     return this.prisma.subcategory.update({
       where: { id },

@@ -36,6 +36,12 @@ export class CategoriesController {
     return this.categoriesService.findOne(+id);
   }
 
+  //TODO: Fix this
+  @Get(':id/products')
+  getProducts(@Param('id') id: string) {
+    return this.categoriesService.getProducts(+id);
+  }
+
   @Patch(':id')
   @ApiOkResponse({ type: CategoryEntity })
   update(
