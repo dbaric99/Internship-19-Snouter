@@ -101,38 +101,31 @@ model Subcategory {
 
 // CategorySpecification table
 model CategorySpecification {
-  id              Int           @id @default(autoincrement())
-  name            String
-  category        Category      @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  category             Category               @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  ProductSpecification ProductSpecification[]
 }
 
 // SubcategorySpecification table
 model SubcategorySpecification {
-  id              Int           @id @default(autoincrement())
-  name            String
-  subcategory     Subcategory   @relation(fields: [subcategoryId], references: [id])
-  subcategoryId   Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
-}
-
-// Specification table
-model Specification {
-  id               Int                        @id @default(autoincrement())
-  categorySpecs    CategorySpecification[]
-  subcategorySpecs SubcategorySpecification[]
-  productSpecs     ProductSpecification[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  subcategory          Subcategory            @relation(fields: [subcategoryId], references: [id])
+  subcategoryId        Int
+  ProductSpecification ProductSpecification[]
 }
 
 // ProductSpecification table
 model ProductSpecification {
-  id              Int           @id @default(autoincrement())
-  value           String
-  product         Product       @relation(fields: [productId], references: [id])
-  productId       Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
+  id                         Int                       @id @default(autoincrement())
+  value                      String
+  product                    Product                   @relation(fields: [productId], references: [id])
+  productId                  Int
+  categorySpec               CategorySpecification?    @relation(fields: [categorySpecificationId], references: [id])
+  categorySpecificationId    Int?
+  subcategorySpec            SubcategorySpecification? @relation(fields: [subcategorySpecificationId], references: [id])
+  subcategorySpecificationId Int?
+  isAdditional               Boolean                   @default(false)
 }
