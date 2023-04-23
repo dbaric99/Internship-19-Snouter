@@ -25,7 +25,6 @@ export class CreateCategoryDto {
         create: this.categorySpecs.map((spec) => ({
           name: spec.name,
           category: { connect: { id: this.id } },
-          specification: { connect: { id: spec.specificationId } },
         })),
       },
     };
