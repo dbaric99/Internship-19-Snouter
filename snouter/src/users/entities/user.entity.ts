@@ -17,7 +17,6 @@ export class UserEntity implements User {
   @ApiProperty({ required: true })
   email: string;
 
-  @ApiProperty({ required: true })
   hash: string;
 
   @ApiProperty({ required: true })
@@ -34,4 +33,6 @@ export class UserEntity implements User {
 
   @ApiProperty({ required: false, nullable: true })
   profileImageUrl: string | null;
+
+  softDelete: boolean;
 }

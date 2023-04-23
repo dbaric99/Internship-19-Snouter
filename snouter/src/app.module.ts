@@ -4,7 +4,7 @@ import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SubcategoriesModule } from './subcategories/subcategories.module';
 import { ProductsModule } from './products/products.module';
-import { GeneralModule } from './modules/general.module';
+import { GeneralModule } from './general/general.module';
 
 @Module({
   imports: [
