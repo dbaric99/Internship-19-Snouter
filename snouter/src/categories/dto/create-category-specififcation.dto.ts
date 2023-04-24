@@ -5,6 +5,6 @@ export class CategorySpecificationDto {
   @IsString()
   @IsNotEmpty()
   @Length(1, 100)
-  @ApiProperty()
+  @ApiProperty({ required: true })
   name: string;
 }

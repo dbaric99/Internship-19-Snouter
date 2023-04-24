@@ -1,6 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { IsString, IsNotEmpty, Length, IsArray } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  Length,
+  IsArray,
+  IsOptional,
+} from 'class-validator';
 import { CategorySpecificationDto } from './create-category-specififcation.dto';
 
 export class CreateCategoryDto {
@@ -13,6 +19,7 @@ export class CreateCategoryDto {
   name: string;
 
   @IsArray()
+  @IsOptional()
   @ApiProperty({
     required: false,
     type: [CategorySpecificationDto],
