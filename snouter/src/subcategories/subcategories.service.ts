@@ -19,7 +19,10 @@ export class SubcategoriesService {
   }
 
   findOne(id: number) {
-    return this.prisma.subcategory.findUnique({ where: { id } });
+    return this.prisma.subcategory.findUnique({
+      where: { id },
+      include: { category: true, subcategorySpecs: true },
+    });
   }
 
   getProducts(id: number) {

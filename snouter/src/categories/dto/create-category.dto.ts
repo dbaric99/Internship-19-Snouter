@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Prisma } from '@prisma/client';
-import { IsString, IsNotEmpty, MaxLength, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, Length, IsArray } from 'class-validator';
 import { CategorySpecificationDto } from './create-category-specififcation.dto';
 
 export class CreateCategoryDto {
@@ -8,7 +8,7 @@ export class CreateCategoryDto {
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
+  @Length(1, 255)
   @ApiProperty({ required: true })
   name: string;
 
