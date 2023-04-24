@@ -12,7 +12,9 @@ export class SubcategoriesService {
   }
 
   findAll() {
-    return this.prisma.subcategory.findMany();
+    return this.prisma.subcategory.findMany({
+      include: { category: true, subcategorySpecs: true },
+    });
   }
 
   findOne(id: number) {
