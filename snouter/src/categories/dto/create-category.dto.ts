@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CategorySpecification, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { IsString, IsNotEmpty, MaxLength, IsArray } from 'class-validator';
 import { CategorySpecificationDto } from './create-category-specififcation.dto';
 
@@ -16,7 +16,7 @@ export class CreateCategoryDto {
     required: false,
     type: [CategorySpecificationDto],
   })
-  categorySpecs: CategorySpecification[];
+  categorySpecs: CategorySpecificationDto[];
 
   parseInputData(): Prisma.CategoryCreateInput {
     return {
