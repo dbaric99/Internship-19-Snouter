@@ -12,11 +12,24 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prisma.product.findMany();
+    return this.prisma.product.findMany({
+      include: {
+        seller: true,
+        subcategory: true,
+        productSpecs: true,
+      },
+    });
   }
 
   findOne(id: number) {
-    return this.prisma.product.findUnique({ where: { id } });
+    return this.prisma.product.findUnique({
+      where: { id },
+      include: {
+        seller: true,
+        subcategory: true,
+        productSpecs: true,
+      },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

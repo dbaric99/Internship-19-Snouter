@@ -19,7 +19,10 @@ export class CategoriesService {
   }
 
   findOne(id: number) {
-    return this.prisma.category.findUnique({ where: { id } });
+    return this.prisma.category.findUnique({
+      where: { id },
+      include: { categorySpecs: true },
+    });
   }
 
   getProducts(id: number) {
