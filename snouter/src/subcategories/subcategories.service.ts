@@ -8,7 +8,8 @@ export class SubcategoriesService {
   constructor(private prisma: PrismaService) {}
 
   create(createSubcategoryDto: CreateSubcategoryDto) {
-    return this.prisma.subcategory.create({ data: createSubcategoryDto });
+    const data = createSubcategoryDto.parseInputData();
+    return this.prisma.subcategory.create({ data });
   }
 
   findAll() {
@@ -26,9 +27,10 @@ export class SubcategoriesService {
   }
 
   update(id: number, updateSubcategoryDto: UpdateSubcategoryDto) {
+    const data = updateSubcategoryDto.parseInputData();
     return this.prisma.subcategory.update({
       where: { id },
-      data: updateSubcategoryDto,
+      data,
     });
   }
 

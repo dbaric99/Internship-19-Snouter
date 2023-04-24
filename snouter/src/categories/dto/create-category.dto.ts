@@ -5,6 +5,7 @@ import { CategorySpecificationDto } from './create-category-specififcation.dto';
 
 export class CreateCategoryDto {
   id: number;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
