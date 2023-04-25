@@ -25,16 +25,4 @@ export class CreateCategoryDto {
     type: [CategorySpecificationDto],
   })
   categorySpecs: CategorySpecificationDto[];
-
-  parseInputData(): Prisma.CategoryCreateInput {
-    return {
-      name: this.name,
-      categorySpecs: {
-        create: this.categorySpecs.map((spec) => ({
-          name: spec.name,
-          category: { connect: { id: this.id } },
-        })),
-      },
-    };
-  }
 }

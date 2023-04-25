@@ -2,14 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CategoryMapper } from 'src/mappers/category-mapper';
 
 @Injectable()
 export class CategoriesService {
   constructor(private prisma: PrismaService) {}
 
   create(createCategoryDto: CreateCategoryDto) {
-    const data = createCategoryDto.parseInputData();
-    return this.prisma.category.create({ data });
+    return this.prisma.category.create({
+      data: CategoryMapper.categoryToDto(createCategoryDto),
+    });
   }
 
   findAll() {
@@ -33,10 +35,9 @@ export class CategoriesService {
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    const data = updateCategoryDto.parseInputData();
     return this.prisma.category.update({
       where: { id },
-      data,
+      data: CategoryMapper.categoryToDto(updateCategoryDto),
     });
   }
 

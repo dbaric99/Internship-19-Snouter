@@ -23,17 +23,4 @@ export class CreateSubcategoryDto {
     type: [SubcategorySpecificationDto],
   })
   subcategorySpecs: SubcategorySpecificationDto[];
-
-  parseInputData(): Prisma.SubcategoryCreateInput {
-    return {
-      name: this.name,
-      category: { connect: { id: this.categoryId } },
-      subcategorySpecs: {
-        create: this.subcategorySpecs.map((spec) => ({
-          name: spec.name,
-          subcategory: { connect: { id: this.id } },
-        })),
-      },
-    };
-  }
 }
