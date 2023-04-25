@@ -42,18 +42,19 @@ model User {
 
 // Address table
 model Address {
-  id     Int    @id @default(autoincrement())
-  street String
-  users  User[]
-  city   City   @relation(fields: [cityId], references: [id])
-  cityId Int
+  id           Int    @id @default(autoincrement())
+  street       String
+  streetNumber Int
+  users        User[]
+  city         City   @relation(fields: [cityId], references: [id])
+  cityId       Int
 }
 
 // City table
 model City {
   id        Int       @id @default(autoincrement())
   name      String
-  zip       String
+  zip       String    @unique
   addresses Address[]
   county    County    @relation(fields: [countyId], references: [id])
   countyId  Int
@@ -61,7 +62,7 @@ model City {
 
 model County {
   id     Int    @id @default(autoincrement())
-  name   String
+  name   String @unique
   cities City[]
 }
 
@@ -86,7 +87,7 @@ model Product {
 // Category table
 model Category {
   id            Int                     @id @default(autoincrement())
-  name          String
+  name          String                  @unique
   subcategories Subcategory[]
   categorySpecs CategorySpecification[]
 }
@@ -94,7 +95,7 @@ model Category {
 // Subcategory table
 model Subcategory {
   id               Int                        @id @default(autoincrement())
-  name             String
+  name             String                     @unique
   products         Product[]
   category         Category                   @relation(fields: [categoryId], references: [id])
   categoryId       Int
