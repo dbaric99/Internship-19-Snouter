@@ -1,20 +1,6 @@
 import { Role } from '@prisma/client';
 
-const users = [
-  {
-    username: 'admin',
-    email: 'sn_admin@snouter.com',
-    hash: 'tempPassword',
-    role: Role.ADMIN,
-  },
-  {
-    firstName: 'Damjana',
-    lastName: 'Baric',
-    username: 'dbaric',
-    email: 'pripravnik-damjana.baric@dump.hr',
-    hash: 'tempPassword',
-  },
-];
+const users = [];
 
 const counties = [
   { id: 0, name: 'Bjelovarsko-bilogorska' },

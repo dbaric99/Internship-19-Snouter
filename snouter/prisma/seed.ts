@@ -13,12 +13,6 @@ async function main() {
     });
   });
 
-  SeedData.users.forEach(async (user) => {
-    await prisma.user.create({
-      data: user,
-    });
-  });
-
   SeedData.categories.forEach(async (category) => {
     await prisma.category.create({
       data: category,
