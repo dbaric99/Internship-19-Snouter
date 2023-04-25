@@ -34,8 +34,16 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @ApiProperty({ required: true })
+  salt: string;
+
+  @IsNotEmpty()
+  @IsString()
   hash: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ required: false, nullable: true })
+  token: string | null;
 
   @IsNotEmpty()
   @ApiProperty({ required: true })

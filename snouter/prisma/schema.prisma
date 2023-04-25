@@ -28,7 +28,9 @@ model User {
   lastName        String?
   username        String    @unique
   email           String    @unique
+  salt            String
   hash            String
+  token           String?
   role            Role      @default(USER)
   phoneNumber     String?
   address         Address?  @relation(fields: [addressId], references: [id])

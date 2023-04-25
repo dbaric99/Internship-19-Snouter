@@ -17,7 +17,11 @@ export class UserEntity implements User {
   @ApiProperty({ required: true })
   email: string;
 
+  salt: string;
   hash: string;
+
+  @ApiProperty({ required: false, nullable: true })
+  token: string | null;
 
   @ApiProperty({ required: true })
   role: Role;
