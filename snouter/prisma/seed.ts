@@ -1,39 +1,45 @@
 // npx prisma db seed
-// prisma/seed.ts
 
 import { PrismaClient } from '@prisma/client';
+import { SeedData } from './seed-data';
 
 // initialize Prisma Client
 const prisma = new PrismaClient();
 
 async function main() {
-  const counties = [
-    { name: 'Bjelovarsko-bilogorska' },
-    { name: 'Brodsko-posavska' },
-    { name: 'Dubrovačko-neretvanska' },
-    { name: 'Istarska' },
-    { name: 'Karlovačka' },
-    { name: 'Koprivničko-križevačka' },
-    { name: 'Krapinsko-zagorska' },
-    { name: 'Ličko-senjska' },
-    { name: 'Međimurska' },
-    { name: 'Osječko-baranjska' },
-    { name: 'Požeško-slavonska' },
-    { name: 'Primorsko-goranska' },
-    { name: 'Sisačko-moslavačka' },
-    { name: 'Splitsko-dalmatinska' },
-    { name: 'Šibensko-kninska' },
-    { name: 'Varaždinska' },
-    { name: 'Virovitičko-podravska' },
-    { name: 'Vukovarsko-srijemska' },
-    { name: 'Zadarska' },
-    { name: 'Zagrebačka' },
-    { name: 'Grad Zagreb' },
-  ];
-
-  counties.forEach(async (county) => {
+  SeedData.counties.forEach(async (county) => {
     await prisma.county.create({
       data: county,
+    });
+  });
+
+  SeedData.users.forEach(async (user) => {
+    await prisma.user.create({
+      data: user,
+    });
+  });
+
+  SeedData.categories.forEach(async (category) => {
+    await prisma.category.create({
+      data: category,
+    });
+  });
+
+  SeedData.cities.forEach(async (city) => {
+    await prisma.city.create({
+      data: city,
+    });
+  });
+
+  SeedData.categorySpecs.forEach(async (categorySpec) => {
+    await prisma.categorySpecification.create({
+      data: categorySpec,
+    });
+  });
+
+  SeedData.subcategories.forEach(async (subcategory) => {
+    await prisma.subcategory.create({
+      data: subcategory,
     });
   });
 }

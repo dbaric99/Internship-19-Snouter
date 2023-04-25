@@ -6,6 +6,8 @@ export class GeneralService {
   constructor(private prisma: PrismaService) {}
 
   getCounties() {
-    return this.prisma.county.findMany();
+    return this.prisma.county.findMany({
+      orderBy: { id: 'asc' },
+    });
   }
 }

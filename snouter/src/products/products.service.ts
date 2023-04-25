@@ -18,6 +18,7 @@ export class ProductsService {
         subcategory: true,
         productSpecs: true,
       },
+      orderBy: { id: 'asc' },
     });
   }
 

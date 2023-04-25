@@ -15,6 +15,7 @@ export class CategoriesService {
   findAll() {
     return this.prisma.category.findMany({
       include: { categorySpecs: true },
+      orderBy: { id: 'asc' },
     });
   }
 
