@@ -23,6 +23,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/role.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from '@prisma/client';
+import { ProfileOwnerGuard } from 'src/auth/profile-owner.guard';
 
 @Controller('users')
 @ApiTags('User')
@@ -46,8 +47,8 @@ export class UsersController {
   }
 
   @Get(':id')
-  @Roles(Role.ADMIN)
-  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard, RoleGuard || ProfileOwnerGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
@@ -55,7 +56,8 @@ export class UsersController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard, RoleGuard || ProfileOwnerGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async update(
