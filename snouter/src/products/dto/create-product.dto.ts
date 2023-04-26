@@ -3,7 +3,7 @@ import { State } from '@prisma/client';
 import {
   IsArray,
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsInt,
   IsNotEmpty,
   IsNumber,
@@ -29,12 +29,12 @@ export class CreateProductDto {
   @ApiProperty({ required: true })
   price: number;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
   @ApiProperty({ required: true })
   createdAt: Date;
 
-  @IsDate()
+  @IsDateString()
   @IsOptional()
   @ApiProperty({ required: false, nullable: true })
   updatedAt: Date | null;

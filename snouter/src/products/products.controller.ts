@@ -23,6 +23,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from '@prisma/client';
 import { RoleGuard } from 'src/auth/role.guard';
+import { ProductOwnerGuard } from 'src/auth/product-owner.guard';
 
 @Controller('products')
 @ApiTags('Product')
@@ -51,7 +52,8 @@ export class ProductsController {
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard, ProductOwnerGuard || RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: ProductEntity })
   update(
@@ -62,7 +64,8 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard, ProductOwnerGuard || RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: ProductEntity })
   remove(@Param('id', ParseIntPipe) id: number) {

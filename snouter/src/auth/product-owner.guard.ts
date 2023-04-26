@@ -1,17 +1,22 @@
-// import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-// import { JwtService } from '@nestjs/jwt';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { ProductsService } from 'src/products/products.service';
 
-// @Injectable()
-// export class ProductOwnerGuard implements CanActivate {
-//   constructor(private jwtService: JwtService) {}
+@Injectable()
+export class ProductOwnerGuard implements CanActivate {
+  constructor(private readonly productService: ProductsService) {}
 
-//   canActivate(context: ExecutionContext): boolean {
-//     const request = context.switchToHttp().getRequest();
-//     const product = request.params.id;
-//     const user = this.jwtService.verify(
-//       request.headers.authorization.split(' ')[1],
-//     );
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    const productId = request.params.id;
+    const productsForUser = await this.productService.getProductsForUser(
+      user.id,
+    );
 
-//     return user && product && user.id === product.sellerId;
-//   }
-// }
+    const isSelling = [...productsForUser].find(
+      (product) => +product.id === +productId,
+    );
+
+    return user && !!isSelling;
+  }
+}

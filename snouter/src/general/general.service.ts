@@ -10,4 +10,10 @@ export class GeneralService {
       orderBy: { id: 'asc' },
     });
   }
+
+  getCities() {
+    return this.prisma.city.findMany({
+      orderBy: { id: 'asc' },
+    });
+  }
 }
