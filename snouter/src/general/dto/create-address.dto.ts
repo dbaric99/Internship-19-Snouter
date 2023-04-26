@@ -1,16 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Address } from '@prisma/client';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
-export class AddressEntity implements Address {
+export class CreateAddressDto {
   @ApiProperty()
   id: number;
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   street: string;
 
+  @IsNumber()
+  @IsNotEmpty()
   @ApiProperty()
   streetNumber: number;
 
+  @IsNotEmpty()
   @ApiProperty()
   cityId: number;
 }

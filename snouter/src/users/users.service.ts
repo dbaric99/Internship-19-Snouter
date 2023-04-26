@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { encodePassword } from '../utils/bcrypt';
+import { CreateAddressDto } from 'src/general/dto/create-address.dto';
 
 @Injectable()
 export class UsersService {
@@ -21,6 +22,19 @@ export class UsersService {
 
   findOne(id: number) {
     return this.prisma.user.findUnique({ where: { id } });
+  }
+
+  addAddress(id: number, createAddressDto: CreateAddressDto) {
+    return this.prisma.address.create({
+      data: createAddressDto,
+    });
+  }
+
+  bindAddressToUser(id: number, addressId: number) {
+    return this.prisma.user.update({
+      where: { id },
+      data: { ...{ addressId: addressId } },
+    });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

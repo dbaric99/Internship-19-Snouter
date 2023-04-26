@@ -24,6 +24,8 @@ import { RoleGuard } from 'src/auth/role.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from '@prisma/client';
 import { ProfileOwnerGuard } from 'src/auth/profile-owner.guard';
+import { AddressEntity } from 'src/general/entities/address.entity';
+import { CreateAddressDto } from 'src/general/dto/create-address.dto';
 
 @Controller('users')
 @ApiTags('User')
@@ -65,6 +67,18 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     return new UserEntity(await this.usersService.update(id, updateUserDto));
+  }
+
+  @Post(':id/address')
+  @UseGuards(JwtAuthGuard, ProfileOwnerGuard)
+  @ApiBearerAuth()
+  @ApiOkResponse({ type: AddressEntity })
+  async addAddress(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() createAddressDto: CreateAddressDto,
+  ) {
+    const address = await this.usersService.addAddress(id, createAddressDto);
+    return this.usersService.bindAddressToUser(id, address.id);
   }
 
   @Delete(':id')
