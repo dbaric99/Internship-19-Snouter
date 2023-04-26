@@ -1,7 +1,8 @@
 import { Role } from '@prisma/client';
 import { encodePassword } from '../src/utils/bcrypt';
 
-const { hash, salt } = encodePassword('admin');
+const { hash, salt } = encodePassword('admin-test');
+const { hash: hashUser, salt: saltUser } = encodePassword('user-test');
 
 const users = [
   {
@@ -11,6 +12,14 @@ const users = [
     password: hash,
     salt: salt,
     role: Role.ADMIN,
+  },
+  {
+    id: 1,
+    username: 'testUser',
+    email: 'test-mail@gmail.com',
+    password: hashUser,
+    salt: saltUser,
+    role: Role.USER,
   },
 ];
 

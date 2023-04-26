@@ -20,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
 
 @Controller('users')
 @ApiTags('User')
@@ -33,7 +34,7 @@ export class UsersController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: [UserEntity] })
   async findAll() {
@@ -42,7 +43,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
@@ -61,7 +62,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {

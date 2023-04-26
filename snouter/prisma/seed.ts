@@ -13,35 +13,35 @@ async function main() {
     });
   });
 
-  // SeedData.counties.forEach(async (county) => {
-  //   await prisma.county.create({
-  //     data: county,
-  //   });
-  // });
+  SeedData.counties.forEach(async (county) => {
+    await prisma.county.create({
+      data: county,
+    });
+  });
 
-  // SeedData.categories.forEach(async (category) => {
-  //   await prisma.category.create({
-  //     data: category,
-  //   });
-  // });
+  SeedData.categories.forEach(async (category) => {
+    await prisma.category.create({
+      data: category,
+    });
+  });
 
-  // SeedData.cities.forEach(async (city) => {
-  //   await prisma.city.create({
-  //     data: city,
-  //   });
-  // });
+  SeedData.cities.forEach(async (city) => {
+    await prisma.city.create({
+      data: city,
+    });
+  });
 
-  // SeedData.categorySpecs.forEach(async (categorySpec) => {
-  //   await prisma.categorySpecification.create({
-  //     data: categorySpec,
-  //   });
-  // });
+  SeedData.categorySpecs.forEach(async (categorySpec) => {
+    await prisma.categorySpecification.create({
+      data: categorySpec,
+    });
+  });
 
-  // SeedData.subcategories.forEach(async (subcategory) => {
-  //   await prisma.subcategory.create({
-  //     data: subcategory,
-  //   });
-  // });
+  SeedData.subcategories.forEach(async (subcategory) => {
+    await prisma.subcategory.create({
+      data: subcategory,
+    });
+  });
 }
 
 // execute the main function
