@@ -21,6 +21,8 @@ import {
 import { UserEntity } from './entities/user.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/role.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
 
 @Controller('users')
 @ApiTags('User')
@@ -34,6 +36,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: [UserEntity] })
@@ -43,6 +46,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
@@ -62,6 +66,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
