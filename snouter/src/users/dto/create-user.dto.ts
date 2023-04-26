@@ -34,11 +34,12 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  salt: string;
+  @ApiProperty({ required: true })
+  password: string;
 
   @IsNotEmpty()
   @IsString()
-  hash: string;
+  salt: string;
 
   @IsNotEmpty()
   @IsString()

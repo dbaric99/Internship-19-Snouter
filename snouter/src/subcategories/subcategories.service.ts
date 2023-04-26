@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
 import { UpdateSubcategoryDto } from './dto/update-subcategory.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CategoryMapper } from 'src/mappers/category-mapper';
+import { CategoryMapper } from 'src/utils/mappers/category-mapper';
 
 @Injectable()
 export class SubcategoriesService {

@@ -26,7 +26,7 @@ export class UserEntity implements User {
   salt: string;
 
   @Exclude()
-  hash: string;
+  password: string;
 
   @ApiProperty({ required: false, nullable: true })
   token: string | null;
