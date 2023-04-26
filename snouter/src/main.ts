@@ -13,6 +13,7 @@ async function bootstrap() {
     .setTitle('Snouter')
     .setDescription('Snouter API endpoints')
     .setVersion('0.1')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

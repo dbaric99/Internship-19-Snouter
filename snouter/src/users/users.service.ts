@@ -24,6 +24,12 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
+    if (updateUserDto.password) {
+      const { hash, salt } = encodePassword(updateUserDto.password);
+      updateUserDto.password = hash;
+      updateUserDto.salt = salt;
+    }
+
     return this.prisma.user.update({
       where: { id },
       data: updateUserDto,
