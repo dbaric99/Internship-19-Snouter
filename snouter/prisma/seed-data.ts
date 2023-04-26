@@ -1,6 +1,18 @@
 import { Role } from '@prisma/client';
+import { encodePassword } from '../src/utils/bcrypt';
 
-const users = [];
+const { hash, salt } = encodePassword('admin');
+
+const users = [
+  {
+    id: 0,
+    username: 'admin',
+    email: 'tech@snouter.com',
+    password: hash,
+    salt: salt,
+    role: Role.ADMIN,
+  },
+];
 
 const counties = [
   { id: 0, name: 'Bjelovarsko-bilogorska' },
