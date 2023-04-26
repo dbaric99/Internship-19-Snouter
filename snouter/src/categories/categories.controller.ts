@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -46,8 +47,13 @@ export class CategoriesController {
 
   @Get(':id')
   @ApiOkResponse({ type: CategoryEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.categoriesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const category = await this.categoriesService.findOne(id);
+    console.log(category);
+    if (!category) {
+      throw new NotFoundException(`Category with ${id} does not exist.`);
+    }
+    return category;
   }
 
   @Get(':id/products')

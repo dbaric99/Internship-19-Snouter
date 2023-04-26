@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -54,7 +55,11 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: UserEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
-    return new UserEntity(await this.usersService.findOne(id));
+    const user = new UserEntity(await this.usersService.findOne(id));
+    if (!user || !Object.keys(user).length) {
+      throw new NotFoundException(`User with ${id} does not exist.`);
+    }
+    return user;
   }
 
   @Patch(':id')

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { SubcategoriesService } from './subcategories.service';
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto';
@@ -46,8 +47,11 @@ export class SubcategoriesController {
 
   @Get(':id')
   @ApiOkResponse({ type: SubcategoryEntity })
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.subcategoriesService.findOne(id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const subcategory = await this.subcategoriesService.findOne(id);
+    if (!subcategory || !Object.keys(subcategory).length) {
+      throw new NotFoundException(`Subcategory with ${id} does not exist.`);
+    }
   }
 
   @Get(':id/products')
