@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Product } from '@prisma/client';
 
 @Injectable()
 export class ProductsService {
@@ -12,11 +13,31 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prisma.product.findMany();
+    return this.prisma.product.findMany({
+      include: {
+        seller: true,
+        subcategory: true,
+        productSpecs: true,
+      },
+      orderBy: { id: 'asc' },
+    });
+  }
+
+  getProductsForUser(userId: number) {
+    return this.prisma.product.findMany({
+      where: { sellerId: userId },
+    });
   }
 
   findOne(id: number) {
-    return this.prisma.product.findUnique({ where: { id } });
+    return this.prisma.product.findUnique({
+      where: { id },
+      include: {
+        seller: true,
+        subcategory: true,
+        productSpecs: true,
+      },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {

@@ -28,29 +28,33 @@ model User {
   lastName        String?
   username        String    @unique
   email           String    @unique
-  hash            String
+  salt            String
+  password        String
+  token           String?
   role            Role      @default(USER)
   phoneNumber     String?
   address         Address?  @relation(fields: [addressId], references: [id])
   addressId       Int?
   products        Product[]
   profileImageUrl String?
+  softDelete      Boolean   @default(false)
 }
 
 // Address table
 model Address {
-  id     Int    @id @default(autoincrement())
-  street String
-  users  User[]
-  city   City   @relation(fields: [cityId], references: [id])
-  cityId Int
+  id           Int    @id @default(autoincrement())
+  street       String
+  streetNumber Int
+  users        User[]
+  city         City   @relation(fields: [cityId], references: [id])
+  cityId       Int
 }
 
 // City table
 model City {
   id        Int       @id @default(autoincrement())
   name      String
-  zip       String
+  zip       String    @unique
   addresses Address[]
   county    County    @relation(fields: [countyId], references: [id])
   countyId  Int
@@ -58,7 +62,7 @@ model City {
 
 model County {
   id     Int    @id @default(autoincrement())
-  name   String
+  name   String @unique
   cities City[]
 }
 
@@ -83,7 +87,7 @@ model Product {
 // Category table
 model Category {
   id            Int                     @id @default(autoincrement())
-  name          String
+  name          String                  @unique
   subcategories Subcategory[]
   categorySpecs CategorySpecification[]
 }
@@ -91,7 +95,7 @@ model Category {
 // Subcategory table
 model Subcategory {
   id               Int                        @id @default(autoincrement())
-  name             String
+  name             String                     @unique
   products         Product[]
   category         Category                   @relation(fields: [categoryId], references: [id])
   categoryId       Int
@@ -100,38 +104,31 @@ model Subcategory {
 
 // CategorySpecification table
 model CategorySpecification {
-  id              Int           @id @default(autoincrement())
-  name            String
-  category        Category      @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  category             Category               @relation(fields: [categoryId], references: [id])
+  categoryId           Int
+  ProductSpecification ProductSpecification[]
 }
 
 // SubcategorySpecification table
 model SubcategorySpecification {
-  id              Int           @id @default(autoincrement())
-  name            String
-  subcategory     Subcategory   @relation(fields: [subcategoryId], references: [id])
-  subcategoryId   Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
-}
-
-// Specification table
-model Specification {
-  id               Int                        @id @default(autoincrement())
-  categorySpecs    CategorySpecification[]
-  subcategorySpecs SubcategorySpecification[]
-  productSpecs     ProductSpecification[]
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  subcategory          Subcategory            @relation(fields: [subcategoryId], references: [id])
+  subcategoryId        Int
+  ProductSpecification ProductSpecification[]
 }
 
 // ProductSpecification table
 model ProductSpecification {
-  id              Int           @id @default(autoincrement())
-  value           String
-  product         Product       @relation(fields: [productId], references: [id])
-  productId       Int
-  specification   Specification @relation(fields: [specificationId], references: [id])
-  specificationId Int
+  id                         Int                       @id @default(autoincrement())
+  value                      String
+  product                    Product                   @relation(fields: [productId], references: [id])
+  productId                  Int
+  categorySpec               CategorySpecification?    @relation(fields: [categorySpecificationId], references: [id])
+  categorySpecificationId    Int?
+  subcategorySpec            SubcategorySpecification? @relation(fields: [subcategorySpecificationId], references: [id])
+  subcategorySpecificationId Int?
+  isAdditional               Boolean                   @default(false)
 }

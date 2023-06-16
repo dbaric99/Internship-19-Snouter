@@ -6,12 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
+  UseGuards,
+  NotFoundException,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CategoryEntity } from './entities/category.entity';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from '@prisma/client';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { RoleGuard } from 'src/auth/role.guard';
 
 @Controller('categories')
 @ApiTags('Category')
@@ -19,6 +31,9 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiBearerAuth()
   @ApiCreatedResponse({ type: CategoryEntity })
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
@@ -32,27 +47,38 @@ export class CategoriesController {
 
   @Get(':id')
   @ApiOkResponse({ type: CategoryEntity })
-  findOne(@Param('id') id: string) {
-    return this.categoriesService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    const category = await this.categoriesService.findOne(id);
+    console.log(category);
+    if (!category) {
+      throw new NotFoundException(`Category with ${id} does not exist.`);
+    }
+    return category;
   }
 
   @Get(':id/products')
-  getProducts(@Param('id') id: string) {
-    return this.categoriesService.getProducts(+id);
+  getProducts(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.getProducts(id);
   }
 
   @Patch(':id')
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CategoryEntity })
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateCategoryDto: UpdateCategoryDto,
   ) {
-    return this.categoriesService.update(+id, updateCategoryDto);
+    return this.categoriesService.update(id, updateCategoryDto);
   }
 
   @Delete(':id')
+  @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: CategoryEntity })
-  remove(@Param('id') id: string) {
-    return this.categoriesService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriesService.remove(id);
   }
 }

@@ -8,8 +8,8 @@ export class ProductEntity implements Product {
   @ApiProperty({ required: true })
   name: string;
 
-  @ApiProperty({ required: false })
-  description: string;
+  @ApiProperty({ required: false, nullable: true })
+  description: string | null;
 
   @ApiProperty({ required: true })
   price: number;
@@ -31,9 +31,6 @@ export class ProductEntity implements Product {
 
   @ApiProperty({ required: true })
   sellerId: number;
-
-  @ApiProperty()
-  categoryId: number;
 
   @ApiProperty({ required: false, nullable: true })
   images: string[] | null;

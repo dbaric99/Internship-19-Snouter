@@ -1,5 +1,6 @@
 import { Category } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
+import { CategorySpecificationEntity } from 'src/general/entities/categorySpecification.entity';
 
 export class CategoryEntity implements Category {
   @ApiProperty()
@@ -7,4 +8,7 @@ export class CategoryEntity implements Category {
 
   @ApiProperty()
   name: string;
+
+  @ApiProperty()
+  categorySpecs: CategorySpecificationEntity[];
 }
